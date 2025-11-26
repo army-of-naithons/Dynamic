@@ -17,7 +17,7 @@
  *
  */
 
-methodmap Dynamic
+methodmap Dynamic __nullable__
 {
 #if defined dynamic_persistent
 	public Dynamic(int blocksize=64, int startsize=0, bool persistent=true)

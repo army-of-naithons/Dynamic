@@ -80,7 +80,7 @@ methodmap Collection < ArrayList
 
 	public int AddItem(Dynamic item)
 	{
-		this.Push(item);
+		return this.Push(item);
 	}
 
 	public int FindItem(Dynamic item)

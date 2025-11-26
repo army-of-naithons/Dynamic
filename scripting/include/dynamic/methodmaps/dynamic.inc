@@ -35,8 +35,8 @@ methodmap Dynamic __nullable__
 		else
 			return false;
 	}
-	
-	property int IsValid
+
+	property bool IsValid
 	{
 		public get()
 		{

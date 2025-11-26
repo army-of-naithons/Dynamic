@@ -27,7 +27,7 @@
 	an ArrayList is used for storage. This methodmap can be inherited by your own methodmaps
 	where you can override the Items method to return your custom methodmap type which MUST
 	inherit a Dynamic methodmap.
-	
+
 	Please see '\scripting\dynamic\examples\collections\' for an example usage of this methodmap
 */
 
@@ -37,7 +37,7 @@ methodmap Collection < ArrayList
 	{
 		return view_as<Collection>(new ArrayList());
 	}
-	
+
 	public void Clear(bool disposemembers=true)
 	{
 		if (disposemembers)
@@ -49,27 +49,27 @@ methodmap Collection < ArrayList
 				member = view_as<Dynamic>(this.Get(i));
 				if (!member.IsValid)
 					continue;
-					
+
 				member.Dispose();
 			}
 		}
-		
+
 		this.Clear();
 	}
-	
+
 	public void Dispose(bool disposemembers=true)
 	{
 		if (disposemembers)
 			this.Clear(true);
-		
+
 		CloseHandle(this);
 	}
-	
+
 	public Dynamic Items(int index)
 	{
 		return this.Get(index);
 	}
-	
+
 	property int Count
 	{
 		public get()
@@ -77,12 +77,12 @@ methodmap Collection < ArrayList
 			return this.Length;
 		}
 	}
-	
+
 	public int AddItem(Dynamic item)
 	{
 		this.Push(item);
 	}
-	
+
 	public int FindItem(Dynamic item)
 	{
 		int count = this.Length;
@@ -93,16 +93,16 @@ methodmap Collection < ArrayList
 		}
 		return -1;
 	}
-	
+
 	public void RemoveItem(Dynamic item)
 	{
 		int index = this.FindItem(item);
 		if (index == -1)
 			return;
-			
+
 		this.Erase(index);
 	}
-	
+
 	public void RemoveIndex(int index)
 	{
 		this.Erase(index);

@@ -52,7 +52,7 @@ typeset Dynamic_HookType
 {
 	// HookChanges
 	function void (Dynamic obj, DynamicOffset offset, const char[] member, Dynamic_MemberType type);
-	
+
 	// DynamicReadKeyValue
 	function Action (Dynamic obj, const char[] member, int depth);
 }
@@ -64,7 +64,7 @@ typeset Dynamic_HookType
 #include <dynamic/methodmaps/basic>
 #include <dynamic/methodmaps/preparedquery>
 
-public SharedPlugin __pl_dynamic = 
+public SharedPlugin __pl_dynamic =
 {
 	name = "dynamic",
 	file = "dynamic.smx",

@@ -115,7 +115,12 @@ public void OnPluginEnd()
 	// Dispose of all objects in the collection pool
 	while (s_CollectionSize > 0)
 	{
+		int oldSize = s_CollectionSize;
 		_Dynamic_Dispose(view_as<DynamicObject>(s_CollectionSize - 1), false, _, _, false);
+		if ( s_CollectionSize == oldSize )
+		{
+			--s_CollectionSize;
+		}
 	}
 }
 

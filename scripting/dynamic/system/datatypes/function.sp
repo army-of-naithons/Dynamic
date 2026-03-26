@@ -53,11 +53,11 @@ stock Function _Dynamic_GetFunction(DynamicObject dynamic, const char[] memberna
 {
 	if (!dynamic.IsValid(true))
 		return INVALID_FUNCTION;
-	
+
 	DynamicOffset offset;
 	if (!_Dynamic_GetMemberDataOffset(dynamic, membername, false, offset, DynamicType_Function))
 		return INVALID_FUNCTION;
-		
+
 	return _GetFunction(dynamic.Data, offset.Index, offset.Cell, dynamic.BlockSize);
 }
 
@@ -65,11 +65,11 @@ stock DynamicOffset _Dynamic_SetFunction(DynamicObject dynamic, const char[] mem
 {
 	if (!dynamic.IsValid(true))
 		return INVALID_DYNAMIC_OFFSET;
-	
+
 	DynamicOffset offset;
 	if (!_Dynamic_GetMemberDataOffset(dynamic, membername, true, offset, DynamicType_Function))
 		return INVALID_DYNAMIC_OFFSET;
-	
+
 	Dynamic_MemberType type = _SetFunction(dynamic.Data, offset.Index, offset.Cell, dynamic.BlockSize, value);
 	_Dynamic_CallOnChangedForward(dynamic, offset, membername, type);
 	return offset;
@@ -79,7 +79,7 @@ stock Function _Dynamic_GetFunctionByOffset(DynamicObject dynamic, DynamicOffset
 {
 	if (!dynamic.IsValid(true))
 		return INVALID_FUNCTION;
-	
+
 	return _GetFunction(dynamic.Data, offset.Index, offset.Cell, dynamic.BlockSize);
 }
 
@@ -87,7 +87,7 @@ stock bool _Dynamic_SetFunctionByOffset(DynamicObject dynamic, DynamicOffset off
 {
 	if (!dynamic.IsValid(true))
 		return false;
-	
+
 	Dynamic_MemberType type = _SetFunction(dynamic.Data, offset.Index, offset.Cell, dynamic.BlockSize, value);
 	_Dynamic_CallOnChangedForwardByOffset(dynamic, offset, type);
 	return true;
@@ -97,7 +97,7 @@ stock int _Dynamic_PushFunction(DynamicObject dynamic, Function value, const cha
 {
 	if (!dynamic.IsValid(true))
 		return INVALID_DYNAMIC_INDEX;
-	
+
 	DynamicOffset offset;
 	int memberindex = _Dynamic_CreateMemberOffset(dynamic, offset, name, DynamicType_Function);
 	_Dynamic_SetMemberDataFunction(dynamic.Data, offset.Index, offset.Cell, dynamic.BlockSize, value);
@@ -109,11 +109,11 @@ stock Function _Dynamic_GetFunctionByIndex(DynamicObject dynamic, int memberinde
 {
 	if (!dynamic.IsValid(true))
 		return INVALID_FUNCTION;
-	
+
 	DynamicOffset offset = _Dynamic_GetMemberOffsetByIndex(dynamic, memberindex);
 	if (offset == INVALID_DYNAMIC_OFFSET)
 		return INVALID_FUNCTION;
-	
+
 	return _Dynamic_GetFunctionByOffset(dynamic, offset);
 }
 
@@ -121,22 +121,22 @@ stock Function _Dynamic_GetMemberDataFunction(ArrayList data, int position, int 
 {
 	// Move the offset forward by one cell as this is where the value is stored
 	offset++;
-	
+
 	// Calculate internal data array index and cell position
 	_Dynamic_RecalculateOffset(position, offset, blocksize);
-	
+
 	// Return value
-	return data.Get(position, offset);
+	return view_as<Function>(data.Get(position, offset));
 }
 
 stock void _Dynamic_SetMemberDataFunction(ArrayList data, int position, int offset, int blocksize, Function value)
 {
 	// Move the offset forward by one cell as this is where the value is stored
 	offset++;
-	
+
 	// Calculate internal data array index and cell position
 	_Dynamic_RecalculateOffset(position, offset, blocksize);
-	
+
 	// Set the value
 	SetArrayCell(data, position, view_as<int>(value), offset);
 }

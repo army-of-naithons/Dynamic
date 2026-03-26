@@ -63,15 +63,15 @@ stock Dynamic_MemberType _SetVector(ArrayList data, int position, int offset, in
 	}
 }
 
-stock bool _Dynamic_GetVector(DynamicObject dynamic, const char[] membername, float[3] vector)
+stock bool _Dynamic_GetVector(DynamicObject dynamic, const char[] membername, float vector[3])
 {
 	if (!dynamic.IsValid(true))
 		return false;
-	
+
 	DynamicOffset offset;
 	if (!_Dynamic_GetMemberDataOffset(dynamic, membername, false, offset, DynamicType_Vector))
 		return false;
-		
+
 	return _GetVector(dynamic.Data, offset.Index, offset.Cell, dynamic.BlockSize, vector);
 }
 
@@ -79,21 +79,21 @@ stock DynamicOffset _Dynamic_SetVector(DynamicObject dynamic, const char[] membe
 {
 	if (!dynamic.IsValid(true))
 		return INVALID_DYNAMIC_OFFSET;
-	
+
 	DynamicOffset offset;
 	if (!_Dynamic_GetMemberDataOffset(dynamic, membername, true, offset, DynamicType_Vector))
 		return INVALID_DYNAMIC_OFFSET;
-	
+
 	Dynamic_MemberType type = _SetVector(dynamic.Data, offset.Index, offset.Cell, dynamic.BlockSize, value, membername);
 	_Dynamic_CallOnChangedForward(dynamic, offset, membername, type);
 	return offset;
 }
 
-stock bool _Dynamic_GetVectorByOffset(DynamicObject dynamic, DynamicOffset offset, float[3] value)
+stock bool _Dynamic_GetVectorByOffset(DynamicObject dynamic, DynamicOffset offset, float value[3])
 {
 	if (!dynamic.IsValid(true))
 		return false;
-	
+
 	return _GetVector(dynamic.Data, offset.Index, offset.Cell, dynamic.BlockSize, value);
 }
 
@@ -101,7 +101,7 @@ stock bool _Dynamic_SetVectorByOffset(DynamicObject dynamic, DynamicOffset offse
 {
 	if (!dynamic.IsValid(true))
 		return false;
-	
+
 	Dynamic_MemberType type = _SetVector(dynamic.Data, offset.Index, offset.Cell, dynamic.BlockSize, value);
 	_Dynamic_CallOnChangedForwardByOffset(dynamic, offset, type);
 	return true;
@@ -111,7 +111,7 @@ stock int _Dynamic_PushVector(DynamicObject dynamic, const float value[3], const
 {
 	if (!dynamic.IsValid(true))
 		return INVALID_DYNAMIC_INDEX;
-	
+
 	DynamicOffset offset;
 	int memberindex = _Dynamic_CreateMemberOffset(dynamic, offset, name, DynamicType_Vector);
 	_Dynamic_SetMemberDataVector(dynamic.Data, offset.Index, offset.Cell, dynamic.BlockSize, value);
@@ -123,11 +123,11 @@ stock bool _Dynamic_GetVectorByIndex(DynamicObject dynamic, int memberindex, flo
 {
 	if (!dynamic.IsValid(true))
 		return false;
-	
+
 	DynamicOffset offset = _Dynamic_GetMemberOffsetByIndex(dynamic, memberindex);
 	if (offset == INVALID_DYNAMIC_OFFSET)
 		return false;
-	
+
 	return _Dynamic_GetVectorByOffset(dynamic, offset, value);
 }
 
@@ -138,10 +138,10 @@ stock bool _Dynamic_GetMemberDataVector(ArrayList data, int position, int offset
 	{
 		// Move the offset forward by one cell as this is where the value is stored
 		offset++;
-		
+
 		// Calculate internal data array index and cell position
 		_Dynamic_RecalculateOffset(position, offset, blocksize);
-		
+
 		// Get the value
 		vector[i] = data.Get(position, offset);
 	}
@@ -155,10 +155,10 @@ stock void _Dynamic_SetMemberDataVector(ArrayList data, int position, int offset
 	{
 		// Move the offset forward by one cell as this is where the value is stored
 		offset++;
-		
+
 		// Calculate internal data array index and cell position
 		_Dynamic_RecalculateOffset(position, offset, blocksize);
-		
+
 		// Set the value
 		SetArrayCell(data, position, value[i], offset);
 	}

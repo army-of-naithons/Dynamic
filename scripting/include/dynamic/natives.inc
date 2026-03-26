@@ -129,8 +129,11 @@ native bool Dynamic_SetFunctionByOffset(Dynamic obj, DynamicOffset offset, Funct
 native int Dynamic_PushFunction(Dynamic obj, Function value, const char[] name="");
 native Function Dynamic_GetFunctionByIndex(Dynamic obj, int index);
 
+native bool Dynamic_CompilePreparedQuery(Dynamic obj, const char[] query);
+native bool Dynamic_ExecutePreparedQuery(Dynamic obj, Database db, Dynamic parameters, SQLQueryCallback callback=INVALID_FUNCTION, any data=0, int buffersize=512);
+
 #if !defined REQUIRE_PLUGIN
-public __pl_dynamic_SetNTVOptional()
+public void __pl_dynamic_SetNTVOptional()
 {
 	MarkNativeAsOptional("Dynamic_Initialise");
 	MarkNativeAsOptional("Dynamic_IsValid");
@@ -212,7 +215,9 @@ public __pl_dynamic_SetNTVOptional()
 	MarkNativeAsOptional("Dynamic_GetMemberNameByOffset");
 	MarkNativeAsOptional("Dynamic_SortMembers");
 	MarkNativeAsOptional("Dynamic_FindByMemberValue");
-	
+	MarkNativeAsOptional("Dynamic_CompilePreparedQuery");
+	MarkNativeAsOptional("Dynamic_ExecutePreparedQuery");
+
 	// These are marked as deprecated
 	MarkNativeAsOptional("Dynamic_GetObject");
 	MarkNativeAsOptional("Dynamic_SetObject");

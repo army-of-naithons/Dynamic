@@ -797,6 +797,37 @@ public int Native_Dynamic_FindByMemberValue(Handle plugin, int params)
 	return view_as<int>(_Dynamic_FindByMemberValue(dynamic, dparams));
 }
 
+// native bool Dynamic_CompilePreparedQuery(Dynamic obj, const char[] query);
+int Native_CompileQuery(Handle plugin, int params)
+{
+	Dynamic dynamic = GetNativeCell( 1 );
+	int maxLength;
+	GetNativeStringLength( 2, maxLength );
+
+	char[] query = new char[++maxLength];
+	GetNativeString( 2, query, maxLength );
+	return _Dynamic_PreparedQuery_Compile( query, dynamic );
+}
+
+// native bool Dynamic_ExecutePreparedQuery(Dynamic obj, Database db, Dynamic parameters, SQLQueryCallback callback=INVALID_FUNCTION, any data=0, int buffersize=512);
+int Native_ExecuteQuery(Handle plugin, int paramsCount)
+{
+	Dynamic dynamic = GetNativeCell( 1 ),
+			params = GetNativeCell( 3 );
+	Database db = GetNativeCell( 2 );
+
+	Function callback = GetNativeFunction( 4 );
+	return _Dynamic_PreparedQuery_Execute(
+		dynamic,
+		db,
+		params,
+		callback,
+		plugin,
+		.data = GetNativeCell( 5 ),
+		.buffersize = GetNativeCell( 6 )
+	);
+}
+
 // native bool Dynamic_ResetObject(int index, bool disposemembers=true, int blocksize=0, int startsize=0);
 public int Native_Dynamic_ResetObject(Handle plugin, int params)
 {
@@ -896,7 +927,11 @@ stock void CreateNatives()
 	CreateNative("Dynamic_GetMemberNameByOffset", Native_Dynamic_GetMemberNameByOffset);
 	CreateNative("Dynamic_SortMembers", Native_Dynamic_SortMembers);
 	CreateNative("Dynamic_FindByMemberValue", Native_Dynamic_FindByMemberValue);
-	
+
+	CreateNative("Dynamic_CompilePreparedQuery", Native_CompileQuery);
+	//CreateNative("Dynamic_PreparePreparedQuery", Native_PrepareQuery);
+	CreateNative("Dynamic_ExecutePreparedQuery", Native_ExecuteQuery);
+
 	// These are deprecated until removed
 	CreateNative("Dynamic_GetObject", Native_Dynamic_GetDynamic);
 	CreateNative("Dynamic_SetObject", Native_Dynamic_SetDynamic);

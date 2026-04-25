@@ -30,10 +30,7 @@ methodmap Dynamic __nullable__
 
 	public static bool IsLoaded()
 	{
-		if (GetFeatureStatus(FeatureType_Native, "Native_Dynamic_Initialise") == FeatureStatus_Available)
-			return true;
-		else
-			return false;
+		return GetFeatureStatus(FeatureType_Native, "Dynamic_Initialise") == FeatureStatus_Available;
 	}
 
 	property bool IsValid

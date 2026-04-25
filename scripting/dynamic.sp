@@ -61,7 +61,7 @@ public Plugin myinfo =
 	name = "Dynamic",
 	author = "Neuro Toxin, MAGNAT2645 (Fixes)",
 	description = "Разделяемые объекты Dynamic для SourcePawn.",
-	version = "32026.a2",
+	version = "42026.a1",
 	url = "https://forums.alliedmods.net/showthread.php?t=270519"
 }
 

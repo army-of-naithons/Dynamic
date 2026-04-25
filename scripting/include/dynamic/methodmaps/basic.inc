@@ -38,7 +38,7 @@ methodmap Basic < StringMap
 		return view_as<Basic>( new StringMap() );
 	}
 
-	public void Dispose(bool disposemembers=true)
+	public void Dispose(/*bool disposemembers=true*/)
 	{
 		delete this;
 	}
